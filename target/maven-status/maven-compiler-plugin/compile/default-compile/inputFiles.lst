@@ -1,3 +1,12 @@
-/Users/stephancedillo/NetBeansProjects/MapaBusqueda/src/main/java/models/Node.java
-/Users/stephancedillo/NetBeansProjects/MapaBusqueda/src/main/java/views/Interfaz.java
-/Users/stephancedillo/NetBeansProjects/MapaBusqueda/src/main/java/views/PanelMapaInteractivo.java
+/Users/y2/Documents/NetBeans Ups/MapaBusqueda/src/main/java/controllers/PrincipalController.java
+/Users/y2/Documents/NetBeans Ups/MapaBusqueda/src/main/java/memoria/NodeDAO.java
+/Users/y2/Documents/NetBeans Ups/MapaBusqueda/src/main/java/memoria/NodeDAOMemoria.java
+/Users/y2/Documents/NetBeans Ups/MapaBusqueda/src/main/java/structures/Celda.java
+/Users/y2/Documents/NetBeans Ups/MapaBusqueda/src/main/java/structures/Node.java
+/Users/y2/Documents/NetBeans Ups/MapaBusqueda/src/main/java/structures/graphs/Graphs.java
+/Users/y2/Documents/NetBeans Ups/MapaBusqueda/src/main/java/structures/graphs/PathFinder.java
+/Users/y2/Documents/NetBeans Ups/MapaBusqueda/src/main/java/structures/graphs/PathResult.java
+/Users/y2/Documents/NetBeans Ups/MapaBusqueda/src/main/java/structures/graphs/implementss/BFSPathFinder.java
+/Users/y2/Documents/NetBeans Ups/MapaBusqueda/src/main/java/structures/graphs/implementss/DFSPathFinder.java
+/Users/y2/Documents/NetBeans Ups/MapaBusqueda/src/main/java/views/Interfaz.java
+/Users/y2/Documents/NetBeans Ups/MapaBusqueda/src/main/java/views/PanelMapaInteractivo.java

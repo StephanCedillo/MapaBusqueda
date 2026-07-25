@@ -6,8 +6,6 @@ package views;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -103,7 +101,6 @@ public class PanelMapaInteractivo extends JPanel {
     private final List<Point> nodosColocados = new ArrayList<>();
 
     private final int RADIO_INTERSECCION = 20;
-    private final int TOLERANCIA_CLIC = 25;
 
     public PanelMapaInteractivo() {
 

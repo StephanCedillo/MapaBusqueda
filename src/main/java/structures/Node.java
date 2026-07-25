@@ -15,6 +15,8 @@ public class Node<T> {
     private T value;
     private int x;
     private int y;
+    
+    private final int RADIO_INTERSECCION = 20;
 
     //Creo un Node
     
@@ -77,9 +79,10 @@ public class Node<T> {
         this.y = y;
     }
     
+    public boolean contiene(int mouseX, int mouseY) {
 
-    
-    
-
-    
+        int radioDelNodo = 20; // Ajusta esto al tamaño visual de tu nodo
+        double distancia = Math.sqrt(Math.pow(this.x - mouseX, 2) + Math.pow(this.y - mouseY, 2));
+        return distancia <= radioDelNodo;
+    }
 }
