@@ -20,23 +20,23 @@ import structures.Node;
 public class BFSPathFinder<T> implements PathFinder<T> {
 
     @Override
-    public PathResult<T> find(Graphs<T> graph, T start, T end) {
+    public PathResult<T> find(Graphs<T> graph,  Node<T> nC, Node<T> nE) {
         Queue<T> queue = new LinkedList<>();
         Set<T> visitados = new HashSet<>();
         Map<Node<T>, Node<T>> parent = new HashMap<>();
         Set<T> visited = new LinkedHashSet<>();
 
-        queue.add(start);
-        visitados.add(start);
-        parent.put(new Node<>(start), null);
+        queue.add(nC.getValue());
+        visitados.add(nC.getValue());
+        parent.put(nC, null);
 
         while (!queue.isEmpty()) {
             T current = queue.poll();
             visited.add(current);
-            if (current.equals(end)) {
-                return new PathResult<>(visitados, buildPath(parent, end));
+            if (current.equals(nE.getValue())) {
+                return new PathResult<>(visitados, buildPath(parent, nE.getValue()));
             }
-            for(Node<T> vecino:graph.getVecinos(current)){
+            for(Node<T> vecino:graph.getVecinos(nC)){
                 if (!visitados.contains(vecino.getValue())) {
                     visitados.add(current);
                     parent.put(vecino, new Node<T>(current));

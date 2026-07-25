@@ -1,9 +1,12 @@
 package views;
 
+import controllers.PrincipalController;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import memoria.*;
+
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -19,17 +22,25 @@ public class Interfaz extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Interfaz.class.getName());
 
+    
+    private NodeDAO nodeDAO;
+    private PanelMapaInteractivo panelMapaInteractivo;
+    private PrincipalController principalController;
     /**
      * Creates new form Interfaz
      */
     public Interfaz() {
         initComponents();
+        
+        nodeDAO = new NodeDAOMemoria();
+        panelMapaInteractivo = new PanelMapaInteractivo();
          pnlMapa.setLayout(new java.awt.BorderLayout());
-        pnlMapa.add(new PanelMapaInteractivo(),java.awt.BorderLayout.CENTER);
+        pnlMapa.add(panelMapaInteractivo,java.awt.BorderLayout.CENTER);
         pnlMapa.revalidate();
         pnlMapa.repaint();
         this.setResizable(false);
         this.setLocationRelativeTo(null);
+        principalController = new PrincipalController(this,panelMapaInteractivo,nodeDAO);
         
     }
 

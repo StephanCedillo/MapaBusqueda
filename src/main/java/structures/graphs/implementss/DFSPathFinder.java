@@ -12,11 +12,11 @@ import structures.Node;
 public class DFSPathFinder<T> implements PathFinder<T> {
 
     @Override
-    public PathResult<T> find(Graphs<T> graph, T start, T end) {
+    public PathResult<T> find(Graphs<T> graph, Node<T> nC, Node<T> nE) {
         Set<T> visited = new HashSet<>();
         Set<T> path = new HashSet<>();
 
-        boolean encontrado = dfs(graph, start, end, visited, path);
+        boolean encontrado = dfs(graph, nC, nE, visited, path);
 
         if (!encontrado) {
             path.clear();
@@ -25,27 +25,26 @@ public class DFSPathFinder<T> implements PathFinder<T> {
         return new PathResult<>(visited, path);
     }
 
-    private boolean dfs(Graphs<T> graph,T currente, T end,Set<T> visited, Set<T> path) {
+    private boolean dfs(Graphs<T> graph,Node<T> nC, Node<T> nE,Set<T> visited, Set<T> path) {
 
-        visited.add(currente);
-        path.add(currente);
-        Node<T> nC = new Node<>(currente);
-        Node<T> nE = new Node<>(end);
+        visited.add(nC.getValue());
+        path.add(nC.getValue());
+       
 
         if (nC.equals(nE)) {
             return true;
         }
 
-        for (Node<T> vecino : graph.getVecinos(currente)) {
+        for (Node<T> vecino : graph.getVecinos(nC)) {
             if (!visited.contains(vecino.getValue())) {
-                boolean encontrado = dfs(graph, vecino.getValue(), end, visited, path);
+                boolean encontrado = dfs(graph, vecino, nE, visited, path);
 
                 if (encontrado) {
                     return true;
                 }
             }
         }
-        path.remove(currente);
+        path.remove(nC.getValue());
         return false;
     }
 

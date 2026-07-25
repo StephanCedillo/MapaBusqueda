@@ -4,6 +4,8 @@
  */
 package structures;
 
+
+
 /**
  *
  * @author stephancedillo
@@ -11,40 +13,30 @@ package structures;
 
 public class Node<T> {
     private T value;
-    private Node<T> left;
-    private Node<T> right;
+    private int x;
+    private int y;
 
     //Creo un Node
     
     public Node(T value) {
+        this.value = value;  
+    }
+    
+    
+    public Node(T value, int x, int y) {
         this.value = value;
-        this.left = null;
-        this.right = null;
+        this.x = x;
+        this.y = y;
     }
 
-    public Node(T value, Node<T> left, Node<T> right) {
-        this.value = value;
-        this.left = left;
-        this.right = right;
-    }
+
     public T getValue() {
         return value;
     }
     public void setValue(T value) {
         this.value = value;
     }
-    public Node<T> getLeft() {
-        return left;
-    }
-    public void setLeft(Node<T> left) {
-        this.left = left;
-    }
-    public Node<T> getRight() {
-        return right;
-    }
-    public void setRight(Node<T> right) {
-        this.right = right;
-    }
+   
 
     @Override
     public String toString() {
@@ -71,6 +63,18 @@ public class Node<T> {
         } else if (!value.equals(other.value))
             return false;
         return true;
+    }
+    public int getX() {
+        return x;
+    }
+    public void setX(int x) {
+        this.x = x;
+    }
+    public int getY() {
+        return y;
+    }
+    public void setY(int y) {
+        this.y = y;
     }
     
 

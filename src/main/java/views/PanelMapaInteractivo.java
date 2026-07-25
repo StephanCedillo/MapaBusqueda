@@ -121,39 +121,10 @@ public class PanelMapaInteractivo extends JPanel {
             System.err.println("Error técnico leyendo la imagen: " + e.getMessage());
         }
 
-        this.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                validarYColocarNodo(e.getPoint());
-                System.out.println("new Point(" + e.getX() + ", " + e.getY() + "),");
-            }
-        });
+        
     }
 
-    private void validarYColocarNodo(Point puntoClic) {
-        Point interseccionCercana = null;
-
-        for (Point p : interseccionesPermitidas) {
-            double distancia = puntoClic.distance(p);
-            if (distancia <= TOLERANCIA_CLIC) {
-                interseccionCercana = p;
-                break;
-            }
-        }
-
-        if (interseccionCercana != null) {
-
-            if (!nodosColocados.contains(interseccionCercana)) {
-                nodosColocados.add(interseccionCercana);
-                System.out.println("Nodo colocado en: " + interseccionCercana);
-                repaint();
-            }
-        } else {
-            System.out.println("Clic inválido: Fuera de intersección permitida.");
-        }
-    }
-
-    @Override
+      @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
@@ -176,4 +147,10 @@ public class PanelMapaInteractivo extends JPanel {
         }
     }
 
+    public void agregarNodoVisual(Point p) {
+        if (!nodosColocados.contains(p)) {
+            nodosColocados.add(p);
+            this.repaint(); 
+        }
+    }
 }
