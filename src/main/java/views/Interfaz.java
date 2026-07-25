@@ -3,6 +3,7 @@ package views;
 import controllers.PrincipalController;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import memoria.*;
@@ -26,15 +27,14 @@ public class Interfaz extends javax.swing.JFrame {
     private NodeDAO nodeDAO;
     private PanelMapaInteractivo panelMapaInteractivo;
     private PrincipalController principalController;
-    /**
-     * Creates new form Interfaz
-     */
+ 
+    
     public Interfaz() {
         initComponents();
         
         nodeDAO = new NodeDAOMemoria();
         panelMapaInteractivo = new PanelMapaInteractivo();
-         pnlMapa.setLayout(new java.awt.BorderLayout());
+        pnlMapa.setLayout(new java.awt.BorderLayout());
         pnlMapa.add(panelMapaInteractivo,java.awt.BorderLayout.CENTER);
         pnlMapa.revalidate();
         pnlMapa.repaint();
@@ -81,6 +81,15 @@ public class Interfaz extends javax.swing.JFrame {
     public JComboBox<String> getComboOrigen() {
         return comboOrigen;
     }
+
+    public JLabel getLblMensajeSeleccion() {
+        return lblMensajeSeleccion;
+    }
+
+    public void setLblMensajeSeleccion(JLabel lblMensajeSeleccion) {
+        this.lblMensajeSeleccion = lblMensajeSeleccion;
+    }
+    
     
 
     /**
@@ -110,6 +119,7 @@ public class Interfaz extends javax.swing.JFrame {
         btnBFS = new javax.swing.JButton();
         btnDFS = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
+        lblMensajeSeleccion = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         txtRespuestas = new javax.swing.JTextArea();
 
@@ -249,6 +259,9 @@ public class Interfaz extends javax.swing.JFrame {
                 .addContainerGap(10, Short.MAX_VALUE))
         );
 
+        lblMensajeSeleccion.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jScrollPane1.setViewportView(lblMensajeSeleccion);
+
         txtRespuestas.setColumns(20);
         txtRespuestas.setRows(5);
         txtRespuestas.setToolTipText("");
@@ -352,6 +365,7 @@ public class Interfaz extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel lblMensajeSeleccion;
     private javax.swing.JPanel pnlMapa;
     private javax.swing.JTextArea txtRespuestas;
     // End of variables declaration//GEN-END:variables

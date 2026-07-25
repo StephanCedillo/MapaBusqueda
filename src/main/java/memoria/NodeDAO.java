@@ -17,4 +17,6 @@ public interface NodeDAO {
     void crear(Node<String> node);
     void borrar(Node<String> node);
     Set<Node<String>> listar();
+    void uniConexion(Node<String> node,Node<String> node2);
+    void biConexion(Node<String> node,Node<String> node2);
 }

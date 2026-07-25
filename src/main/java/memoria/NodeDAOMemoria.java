@@ -17,7 +17,7 @@ import structures.graphs.Graphs;
  * @author stephancedillo
  */
 public class NodeDAOMemoria implements NodeDAO {
-     private Set<Node<String>> nodos;
+    private Set<Node<String>> nodos;
     private Graphs<String> graph;
     public NodeDAOMemoria() {
         nodos = new HashSet<>();
@@ -39,5 +39,15 @@ public class NodeDAOMemoria implements NodeDAO {
     @Override
     public Set<Node<String>> listar() {
         return nodos;
+    }
+
+    @Override
+    public void uniConexion(Node<String> node, Node<String> node2) {
+        graph.addEdgeUni(node, node2);
+    }
+
+    @Override
+    public void biConexion(Node<String> node, Node<String> node2) {
+        graph.addEdge(node, node2);
     }
 }
