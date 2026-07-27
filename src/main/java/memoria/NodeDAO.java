@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Set;
 
 import structures.Node;
+import structures.graphs.Graphs;
 
 /**
  *
@@ -19,4 +20,6 @@ public interface NodeDAO {
     Set<Node<String>> listar();
     void uniConexion(Node<String> node,Node<String> node2);
     void biConexion(Node<String> node,Node<String> node2);
+    void crearPredefinidos();
+    Graphs<String> obtenerGrafo();
 }

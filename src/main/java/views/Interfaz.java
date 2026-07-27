@@ -7,6 +7,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import memoria.*;
+import structures.Node;
 
 
 /*
@@ -74,11 +75,11 @@ public class Interfaz extends javax.swing.JFrame {
         return btnLimpiarMapa;
     }
 
-    public JComboBox<String> getComboDestino() {
+    public JComboBox<Node> getComboDestino() {
         return comboDestino;
     }
 
-    public JComboBox<String> getComboOrigen() {
+    public JComboBox<Node> getComboOrigen() {
         return comboOrigen;
     }
 
@@ -89,6 +90,19 @@ public class Interfaz extends javax.swing.JFrame {
     public void setLblMensajeSeleccion(JLabel lblMensajeSeleccion) {
         this.lblMensajeSeleccion = lblMensajeSeleccion;
     }
+
+    public JButton getBtnCrearMapa() {
+        return btnCrearMapa;
+    }
+
+    public JButton getBtnLimpiarR() {
+        return btnLimpiarR;
+    }
+
+    public void setBtnLimpiarR(JButton btnLimpiarR) {
+        this.btnLimpiarR = btnLimpiarR;
+    }
+    
     
     
 
@@ -110,6 +124,7 @@ public class Interfaz extends javax.swing.JFrame {
         btnCrearNodo = new javax.swing.JButton();
         btnConectarNodo = new javax.swing.JButton();
         btnLimpiarMapa = new javax.swing.JButton();
+        btnCrearMapa = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         comboOrigen = new javax.swing.JComboBox<>();
@@ -118,6 +133,7 @@ public class Interfaz extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         btnBFS = new javax.swing.JButton();
         btnDFS = new javax.swing.JButton();
+        btnLimpiarR = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         lblMensajeSeleccion = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -176,39 +192,44 @@ public class Interfaz extends javax.swing.JFrame {
         btnLimpiarMapa.setFont(new java.awt.Font("ITF Devanagari Marathi", 1, 14)); // NOI18N
         btnLimpiarMapa.setText("Limpiar Mapa");
 
+        btnCrearMapa.setBackground(new java.awt.Color(102, 102, 102));
+        btnCrearMapa.setFont(new java.awt.Font("ITF Devanagari Marathi", 1, 14)); // NOI18N
+        btnCrearMapa.setText("Crear Mapa Predefinido");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnCrearNodo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnConectarNodo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnLimpiarMapa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnCrearNodo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnConectarNodo, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE)
+                            .addComponent(btnLimpiarMapa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(btnCrearMapa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(26, Short.MAX_VALUE)
+                .addComponent(btnCrearMapa)
+                .addGap(18, 18, 18)
                 .addComponent(btnCrearNodo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(btnConectarNodo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnLimpiarMapa)
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addGap(17, 17, 17))
         );
 
         jLabel2.setFont(new java.awt.Font("ITF Devanagari Marathi", 0, 14)); // NOI18N
         jLabel2.setText("ORIGEN");
 
-        comboOrigen.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         jLabel3.setFont(new java.awt.Font("ITF Devanagari Marathi", 0, 14)); // NOI18N
         jLabel3.setText("DESTINO");
-
-        comboDestino.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel4.setFont(new java.awt.Font("ITF Devanagari Marathi", 0, 14)); // NOI18N
         jLabel4.setText("CALCULAR RECORRIDO:");
@@ -220,6 +241,10 @@ public class Interfaz extends javax.swing.JFrame {
         btnDFS.setBackground(new java.awt.Color(102, 102, 102));
         btnDFS.setFont(new java.awt.Font("ITF Devanagari Marathi", 1, 14)); // NOI18N
         btnDFS.setText("DFS");
+
+        btnLimpiarR.setBackground(new java.awt.Color(102, 102, 102));
+        btnLimpiarR.setFont(new java.awt.Font("ITF Devanagari Marathi", 1, 14)); // NOI18N
+        btnLimpiarR.setText("Limpiar");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -235,9 +260,10 @@ public class Interfaz extends javax.swing.JFrame {
                             .addComponent(jLabel2)
                             .addComponent(jLabel3)
                             .addComponent(jLabel4))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(0, 19, Short.MAX_VALUE))
                     .addComponent(btnBFS, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnDFS, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnDFS, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnLimpiarR, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -256,7 +282,9 @@ public class Interfaz extends javax.swing.JFrame {
                 .addComponent(btnBFS)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnDFS)
-                .addContainerGap(10, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnLimpiarR)
+                .addContainerGap())
         );
 
         lblMensajeSeleccion.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -290,13 +318,13 @@ public class Interfaz extends javax.swing.JFrame {
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -349,11 +377,13 @@ public class Interfaz extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBFS;
     private javax.swing.JButton btnConectarNodo;
+    private javax.swing.JButton btnCrearMapa;
     private javax.swing.JButton btnCrearNodo;
     private javax.swing.JButton btnDFS;
     private javax.swing.JButton btnLimpiarMapa;
-    private javax.swing.JComboBox<String> comboDestino;
-    private javax.swing.JComboBox<String> comboOrigen;
+    private javax.swing.JButton btnLimpiarR;
+    private javax.swing.JComboBox<Node> comboDestino;
+    private javax.swing.JComboBox<Node> comboOrigen;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

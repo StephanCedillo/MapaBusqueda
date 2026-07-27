@@ -4,16 +4,23 @@
  */
 package views;
 
+import controllers.Conexion;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import structures.Node;
 
 public class PanelMapaInteractivo extends JPanel {
 
     private Image imagenFondo;
 
+    private Map<Conexion, Boolean> conexiones;
     // Intersecciones válidas 
     private final List<Point> interseccionesPermitidas = Arrays.asList(
             new Point(22, 48),
@@ -98,11 +105,12 @@ public class PanelMapaInteractivo extends JPanel {
             new Point(30, 45)
     );
 
-    private final List<Point> nodosColocados = new ArrayList<>();
-
+    private  List<Node> nodosColocados = new ArrayList<>();
+    private Map<Node, String> nodosDireccion= new HashMap<Node, String>();
     private final int RADIO_INTERSECCION = 20;
 
     public PanelMapaInteractivo() {
+        conexiones = new HashMap<>();
 
         try {
             java.net.URL urlImagen = getClass().getResource("/mapa.png");
@@ -117,14 +125,24 @@ public class PanelMapaInteractivo extends JPanel {
         } catch (Exception e) {
             System.err.println("Error técnico leyendo la imagen: " + e.getMessage());
         }
+        this.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                System.out.println(e.getPoint());
+            }
+        });
 
-        
     }
 
-      @Override
+    @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+
         Graphics2D g2d = (Graphics2D) g;
+
+        Font fuenteTexto = new Font("Arial", Font.BOLD, 12);
+        g2d.setFont(fuenteTexto);
+        FontMetrics fm = g2d.getFontMetrics(fuenteTexto);
 
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
@@ -132,22 +150,135 @@ public class PanelMapaInteractivo extends JPanel {
             g2d.drawImage(imagenFondo, 0, 0, getWidth(), getHeight(), this);
         }
 
+        
         g2d.setColor(new Color(150, 150, 150, 100));
+
         for (Point p : interseccionesPermitidas) {
             g2d.drawOval(p.x - RADIO_INTERSECCION / 2, p.y - RADIO_INTERSECCION / 2, RADIO_INTERSECCION, RADIO_INTERSECCION);
         }
 
-        g2d.setColor(Color.RED);
-        for (Point p : nodosColocados) {
+        for (Node p : nodosColocados) {
             int diametro = 24;
-            g2d.fillOval(p.x - diametro / 2, p.y - diametro / 2, diametro, diametro);
+            if(p.getEstado().equals("Path")){
+                 g2d.setColor(Color.BLUE);
+                
+            }else if(p.getEstado().equals("Visited")){
+                 g2d.setColor(Color.GREEN);
+            } else{
+                 g2d.setColor(Color.DARK_GRAY);
+            };
+           
+            g2d.fillOval(p.getX() - diametro / 2, p.getY() - diametro / 2, diametro, diametro);
+
+            String texto = String.valueOf(p.getValue());
+            int textX = p.getX() - (fm.stringWidth(texto) / 2);
+            int textY = p.getY() + (fm.getAscent() / 2) - 2;
+
+            g2d.setColor(Color.WHITE);
+            g2d.drawString(texto, textX, textY);
+        }
+        
+        g2d.setStroke(new BasicStroke(3));
+        g2d.setColor(Color.RED);
+
+        for (Map.Entry<Conexion, Boolean> entry : conexiones.entrySet()) {
+
+            Conexion c = entry.getKey();
+            boolean bidireccional = entry.getValue();
+
+            Point a = c.getA();
+            Point b = c.getB();
+
+            dibujarFlecha(g2d, a.x, a.y, b.x, b.y);
+
+            if (bidireccional) {
+                dibujarFlecha(g2d, b.x, b.y, a.x, a.y);
+            }
+        }
+
+    }
+
+    public void agregarNodoVisual(Node node) {
+        if (!nodosColocados.contains(node)) {
+            nodosColocados.add(node);
+            this.repaint();
         }
     }
 
-    public void agregarNodoVisual(Point p) {
-        if (!nodosColocados.contains(p)) {
-            nodosColocados.add(p);
-            this.repaint(); 
+    public void agregarConexion(Conexion conexion, boolean direccion) {
+        // false unidireccional
+        // true bidireccional
+        conexiones.put(conexion, direccion);
+        repaint();
+    }
+
+   private void dibujarFlecha(Graphics2D g2d, int x1, int y1, int x2, int y2) {
+        // radio
+        int radioNodo = 12; 
+
+        // angulo linea
+        double dy = y2 - y1;
+        double dx = x2 - x1;
+        double theta = Math.atan2(dy, dx);
+
+        // punto inicio
+        int x1Borde = (int) (x1 + radioNodo * Math.cos(theta));
+        int y1Borde = (int) (y1 + radioNodo * Math.sin(theta));
+
+        // punto final
+        int x2Borde = (int) (x2 - radioNodo * Math.cos(theta));
+        int y2Borde = (int) (y2 - radioNodo * Math.sin(theta));
+
+        // liniecita
+        g2d.drawLine(x1Borde, y1Borde, x2Borde, y2Borde);
+
+        // punta flecha
+        double phi = Math.toRadians(25);
+        int barb = 15;
+
+      
+        double rho = theta + phi;
+        for (int i = 0; i < 2; i++) {
+            int x = (int) (x2Borde - barb * Math.cos(rho));
+            int y = (int) (y2Borde - barb * Math.sin(rho));
+
+            g2d.drawLine(x2Borde, y2Borde, x, y);
+
+            rho = theta - phi;
         }
     }
+
+    public Image getImagenFondo() {
+        return imagenFondo;
+    }
+
+    public void setImagenFondo(Image imagenFondo) {
+        this.imagenFondo = imagenFondo;
+    }
+
+    public Map<Conexion, Boolean> getConexiones() {
+        return conexiones;
+    }
+
+    public void setConexiones(Map<Conexion, Boolean> conexiones) {
+        this.conexiones = conexiones;
+    }
+
+    public List<Node> getNodosColocados() {
+        return nodosColocados;
+    }
+
+    public void setNodosColocados(List<Node> nodosColocados) {
+        this.nodosColocados = nodosColocados;
+    }
+
+    public Map<Node, String> getNodosDireccion() {
+        return nodosDireccion;
+    }
+
+    public void setNodosDireccion(Map<Node, String> nodosDireccion) {
+        this.nodosDireccion = nodosDireccion;
+    }
+   
+   
 }

@@ -15,6 +15,7 @@ public class Node<T> {
     private T value;
     private int x;
     private int y;
+    private String estado;
     
     private final int RADIO_INTERSECCION = 20;
 
@@ -29,6 +30,7 @@ public class Node<T> {
         this.value = value;
         this.x = x;
         this.y = y;
+        estado = "Create";
     }
 
 
@@ -42,7 +44,7 @@ public class Node<T> {
 
     @Override
     public String toString() {
-        return " N[" + value + "]";
+        return " Nodo " + value + "";
     }
 
     @Override
@@ -85,4 +87,13 @@ public class Node<T> {
         double distancia = Math.sqrt(Math.pow(this.x - mouseX, 2) + Math.pow(this.y - mouseY, 2));
         return distancia <= radioDelNodo;
     }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+    
 }
