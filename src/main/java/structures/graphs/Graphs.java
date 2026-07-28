@@ -68,18 +68,11 @@ public class Graphs<T> {
       
 
     }
-    public void remove(Node<T> nV1){
-     
-        
-        for (Map.Entry<Node<T>, Set<Node<T>>> entry : nodes.entrySet()) {
-            for (int i = 0; i < entry.getValue().size(); i++) {
-               Set<Node<T>> setLista = entry.getValue();
-                 setLista.remove(nV1);
-            }
-            
+    public void remove(Node<T> nV1) {
+        for (Set<Node<T>> vecinos : nodes.values()) {
+            vecinos.remove(nV1);
         }
         nodes.remove(nV1);
-         
     }
   
     public Set<Node<T>> getVecinos(Node<T> nC) {
