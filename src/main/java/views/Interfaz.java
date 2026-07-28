@@ -102,6 +102,16 @@ public class Interfaz extends javax.swing.JFrame {
     public void setBtnLimpiarR(JButton btnLimpiarR) {
         this.btnLimpiarR = btnLimpiarR;
     }
+
+    public JButton getBtnEliminarNodo() {
+        return btnEliminarNodo;
+    }
+
+    public void setBtnEliminarNodo(JButton btnEliminarNodo) {
+        this.btnEliminarNodo = btnEliminarNodo;
+    }
+    
+    
     
     
     
@@ -125,6 +135,7 @@ public class Interfaz extends javax.swing.JFrame {
         btnConectarNodo = new javax.swing.JButton();
         btnLimpiarMapa = new javax.swing.JButton();
         btnCrearMapa = new javax.swing.JButton();
+        btnEliminarNodo = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         comboOrigen = new javax.swing.JComboBox<>();
@@ -196,19 +207,28 @@ public class Interfaz extends javax.swing.JFrame {
         btnCrearMapa.setFont(new java.awt.Font("ITF Devanagari Marathi", 1, 14)); // NOI18N
         btnCrearMapa.setText("Crear Mapa Predefinido");
 
+        btnEliminarNodo.setBackground(new java.awt.Color(102, 102, 102));
+        btnEliminarNodo.setFont(new java.awt.Font("ITF Devanagari Marathi", 1, 14)); // NOI18N
+        btnEliminarNodo.setText("Eliminar Nodo");
+        btnEliminarNodo.addActionListener(this::btnEliminarNodoActionPerformed);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnCrearMapa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnCrearMapa, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)
                     .addComponent(btnCrearNodo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnLimpiarMapa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnConectarNodo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(btnLimpiarMapa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(btnConectarNodo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btnEliminarNodo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -216,13 +236,15 @@ public class Interfaz extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btnCrearMapa)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
-                .addComponent(btnCrearNodo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnCrearNodo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnConectarNodo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnLimpiarMapa)
-                .addGap(25, 25, 25))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnEliminarNodo)
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         jLabel2.setFont(new java.awt.Font("ITF Devanagari Marathi", 0, 14)); // NOI18N
@@ -353,6 +375,10 @@ public class Interfaz extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnEliminarNodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarNodoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEliminarNodoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -380,6 +406,7 @@ public class Interfaz extends javax.swing.JFrame {
     private javax.swing.JButton btnCrearMapa;
     private javax.swing.JButton btnCrearNodo;
     private javax.swing.JButton btnDFS;
+    private javax.swing.JButton btnEliminarNodo;
     private javax.swing.JButton btnLimpiarMapa;
     private javax.swing.JButton btnLimpiarR;
     private javax.swing.JComboBox<Node> comboDestino;

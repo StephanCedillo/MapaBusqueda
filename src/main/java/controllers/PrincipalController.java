@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.JOptionPane;
 
@@ -192,6 +193,7 @@ public class PrincipalController {
 
     private boolean modoCrearNodo = false;
     private boolean modoConectar = false;
+    private boolean modoEliminar = false;
 
     public PrincipalController(Interfaz principalView, PanelMapaInteractivo panel, NodeDAO daoNode) {
         this.principalView = principalView;
@@ -212,6 +214,7 @@ public class PrincipalController {
             public void actionPerformed(ActionEvent e) {
                 modoCrearNodo = true;
                 modoConectar = false;
+                modoEliminar = false;
                 nodoA = null;
                 principalView.getLblMensajeSeleccion().setText("");
                 JOptionPane.showMessageDialog(principalView, "Modo creación activado. Haz clic en las intersecciones del mapa.");
@@ -266,6 +269,7 @@ public class PrincipalController {
         configurarBotonCrearPredefinido();
         configurarBotonRecorridos();
         cofigurarBotonLimpiar();
+        configurarBotonEliminarNodo();
 
     }
 
@@ -286,13 +290,14 @@ public class PrincipalController {
 
                 if (seleccion == -1) {
                     modoConectar = false;
-                    principalView.getLblMensajeSeleccion().setText("");
+                    JOptionPane.showConfirmDialog(principalView, "Proceso Cancelado");
                     return;
                 }
 
                 tipoConexion = seleccion;
                 modoConectar = true;
                 modoCrearNodo = false;
+                modoEliminar = false;
                 nodoA = null;
                 principalView.getLblMensajeSeleccion().setText("Selecciona el Punto 1");
             }
@@ -307,7 +312,77 @@ public class PrincipalController {
                     validarYColocarNodo(e.getPoint());
                     return;
                 }
+                if (modoEliminar) {
+                    Node<String> nodoClickeado = null;
 
+                    for (Node<String> nodo : daoNode.listar()) {
+                        if (nodo.contiene(e.getX(), e.getY())) {
+                            nodoClickeado = nodo;
+                            break;
+                        }
+                    }
+
+                    if (nodoClickeado == null) {
+                        return;
+                    }
+
+                    int confirmacion = JOptionPane.showConfirmDialog(
+                            principalView,
+                            "¿Deseas eliminar el nodo '" + nodoClickeado.getValue() + "' y todas sus conexiones?",
+                            "Confirmar eliminación",
+                            JOptionPane.YES_NO_OPTION
+                    );
+
+                    if (confirmacion == JOptionPane.YES_OPTION) {
+                        
+                        daoNode.borrar(nodoClickeado);
+
+                        
+                        List<Node> nodosEnPanel = panel.getNodosColocados();
+                        for (int i = 0; i < nodosEnPanel.size(); i++) {
+                            if (nodosEnPanel.get(i).equals(nodoClickeado)) {
+                                nodosEnPanel.remove(i);
+                                break;
+                            }
+                        }
+
+                        
+                        if (panel.getConexiones() != null) {
+                            int xPosNodo = nodoClickeado.getX();
+                            int yPosNodo = nodoClickeado.getY();
+
+                            
+                            List<Conexion> conexionesABorrar = new ArrayList<>();
+
+         
+                            for (Conexion conexion : panel.getConexiones().keySet()) {
+                                Point puntoA = conexion.getA();
+                                Point puntoB = conexion.getB();
+
+                                if ((puntoA.x == xPosNodo && puntoA.y == yPosNodo) || (puntoB.x == xPosNodo && puntoB.y == yPosNodo)) {
+                                    conexionesABorrar.add(conexion);
+                                }
+                            }
+
+                          
+                            for (Conexion conexion : conexionesABorrar) {
+                                panel.getConexiones().remove(conexion);
+                            }
+                            JOptionPane.showMessageDialog(principalView, "Nodo Eliminado con Exito");
+           
+                        actualizarNodos();
+                        panel.repaint();
+                        }
+                    }else{
+                       JOptionPane.showMessageDialog(principalView, "El nodo " + nodoClickeado.getValue() + " no fue eliminado"); 
+                    }
+                    int continuar = JOptionPane.showConfirmDialog(principalView, "Deseas eliminar mas nodos?");
+                    if(continuar == JOptionPane.NO_OPTION){
+                        JOptionPane.showMessageDialog(principalView,"Modo eliminar nodo desactivado");
+                        modoEliminar = false;
+                    }
+                    return;
+                }
                 if (!modoConectar) {
                     return;
                 }
@@ -575,5 +650,18 @@ public class PrincipalController {
         actualizarNodos();
         panel.repaint();
     }
-
+    
+    
+    // ===== ELIMINAR NODO =====
+    public void configurarBotonEliminarNodo(){
+        principalView.getBtnEliminarNodo().addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                modoConectar = false;
+                modoCrearNodo = false;
+                modoEliminar = true;
+                JOptionPane.showMessageDialog(principalView, "Modo eliminar nodo activado");
+            }
+        });
+    }
 }
