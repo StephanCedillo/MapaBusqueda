@@ -116,9 +116,11 @@ public class PrincipalController {
                 }
             }
         } else {
-            System.out.println("Clic inválido: Fuera de intersección permitida.");
-        }
-    }
+            
+            JOptionPane.showMessageDialog( principalView, "Clic inválido: Fuera de intersección permitida.");
+
+    }      
+ }
 
     private void configurarEventos() {
         configurarBotonCrear();
