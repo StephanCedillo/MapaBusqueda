@@ -24,11 +24,13 @@ public class PathResult<T> {
     public Set<T> getPath() {
         return path;
     }
-    @Override
+  @Override
     public String toString() {
-        return "\n ======== PATHRESULT ======= " + 
-        "\n visitados= " + visitados + ""+
-        "\n " + ( path.isEmpty() ? "No se encontro camino a los nodos" : "path= " + path);
+        return 
+               " > Nodos Visitados:\n" +
+               "   " + visitados + "\n\n" +
+               " > Camino Encontrado:\n" +
+               (path.isEmpty() ? "   [!] No se encontró un camino hacia el destino.\n" : "   " + path + "\n") ;
     }
     
 }

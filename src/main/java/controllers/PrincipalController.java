@@ -5,7 +5,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -199,7 +201,8 @@ public class PrincipalController {
         configurarEventos();
         configurarListenerMapaUnico();
 
-       
+        inicializarNodos();
+
         actualizarNodos();
     }
 
@@ -236,7 +239,7 @@ public class PrincipalController {
                 Node node = new Node<String>(textoIngresado, interseccionCercana.x, interseccionCercana.y);
                 daoNode.crear(node);
                 actualizarNodos();
-         
+
                 panel.agregarNodoVisual(node);
 
                 System.out.println("Nodo colocado en: " + interseccionCercana);
@@ -391,58 +394,53 @@ public class PrincipalController {
     }
 
     private void actualizarNodos() {
-        
+
         principalView.getComboDestino().removeAllItems();
         principalView.getComboOrigen().removeAllItems();
-        
 
         if (daoNode.listar().isEmpty()) {
-            
+
             return;
         }
 
         for (Node node : daoNode.listar()) {
             principalView.getComboDestino().addItem(node);
             principalView.getComboOrigen().addItem(node);
-           
+
         }
 
-        
     }
 
     private void configurarBotonCrearPredefinido() {
-           principalView.getBtnCrearMapa().addActionListener(new ActionListener() {
+        principalView.getBtnCrearMapa().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 crearPredefinido();
-            } });
-         
+            }
+        });
+
     }
 
     private void crearPredefinido() {
-      
-     
 
-     if(!daoNode.listar().isEmpty()){
-         return;
-     }
-     daoNode.crearPredefinidos();
+        if (!daoNode.listar().isEmpty()) {
+            return;
+        }
+        daoNode.crearPredefinidos();
         for (Node node : daoNode.listar()) {
             panel.agregarNodoVisual(node);
-            
+
         }
-        
+
         for (Conexion conexion : conexionesPermitidas) {
-        
+
             Node<String> nodoA = buscarNodoPorPunto(conexion.getA());
             Node<String> nodoB = buscarNodoPorPunto(conexion.getB());
 
-  
             if (nodoA != null && nodoB != null) {
-               
+
                 daoNode.biConexion(nodoA, nodoB);
-                
-               
+
                 panel.agregarConexion(new Conexion(
                         new Point(nodoA.getX(), nodoA.getY()),
                         new Point(nodoB.getX(), nodoB.getY())
@@ -452,9 +450,10 @@ public class PrincipalController {
         actualizarNodos();
         panel.repaint();
     }
+
     private Node<String> buscarNodoPorPunto(Point p) {
         for (Node nodo : daoNode.listar()) {
-           
+
             if (nodo.getX() == p.x && nodo.getY() == p.y) {
                 return (Node<String>) nodo;
             }
@@ -463,96 +462,118 @@ public class PrincipalController {
     }
 
     private void configurarBotonRecorridos() {
-     principalView.getBtnBFS().addActionListener(new ActionListener() {
+        principalView.getBtnBFS().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 recorrerBFS();
-            } 
+            }
 
-        
-     });
-      principalView.getBtnDFS().addActionListener(new ActionListener() {
+        });
+        principalView.getBtnDFS().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 recorrerDFS();
-            } 
+            }
 
-       
-     });
-      principalView.getBtnLimpiarR().addActionListener(new ActionListener() {
+        });
+        principalView.getBtnLimpiarR().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 limpiarRecorrido();
-            } 
+            }
 
-       
-     });
+        });
     }
 
-     private void recorrerBFS() {
-         BFSPathFinder bfsPathFinder = new BFSPathFinder();
-        PathResult<String> resultado = bfsPathFinder.find(daoNode.obtenerGrafo(),(Node) principalView.getComboOrigen().getSelectedItem(), (Node )principalView.getComboDestino().getSelectedItem());
-        
-         for (Node node : panel.getNodosColocados()) {
-             for (String valorNodo : resultado.getVisitados()) {
+    private void recorrerBFS() {
+        BFSPathFinder bfsPathFinder = new BFSPathFinder();
+        PathResult<String> resultado = bfsPathFinder.find(daoNode.obtenerGrafo(), (Node) principalView.getComboOrigen().getSelectedItem(), (Node) principalView.getComboDestino().getSelectedItem());
 
-                 if (valorNodo.equalsIgnoreCase(String.valueOf(node.getValue()))) {
-                     node.setEstado("Visited");
-                 }
-             }
-             for (String valorNodo : resultado.getPath()) {
-                 if (valorNodo.equalsIgnoreCase(String.valueOf(node.getValue()))) {
-                     node.setEstado("Path");
-                 }
-             }
+        for (Node node : panel.getNodosColocados()) {
+            for (String valorNodo : resultado.getVisitados()) {
 
-         }
-         
-         principalView.getTxtRespuestas().setText(resultado.toString());
-         
-         panel.repaint();
-         
+                if (valorNodo.equalsIgnoreCase(String.valueOf(node.getValue()))) {
+                    node.setEstado("Visited");
+                }
+            }
+            for (String valorNodo : resultado.getPath()) {
+                if (valorNodo.equalsIgnoreCase(String.valueOf(node.getValue()))) {
+                    node.setEstado("Path");
+                }
+            }
 
-     }
-       private void recorrerDFS() {
-           DFSPathFinder dfsPathFinder = new DFSPathFinder();
-        PathResult<String> resultado = dfsPathFinder.find(daoNode.obtenerGrafo(),(Node) principalView.getComboOrigen().getSelectedItem(), (Node )principalView.getComboDestino().getSelectedItem());
-        
-       
-         for (Node node : panel.getNodosColocados()) {
-             for (String valorNodo : resultado.getVisitados()) {
+        }
 
-                 if (valorNodo.equalsIgnoreCase(String.valueOf(node.getValue()))) {
-                     node.setEstado("Visited");
-                 }
-             }
-             for (String valorNodo : resultado.getPath()) {
-                 if (valorNodo.equalsIgnoreCase(String.valueOf(node.getValue()))) {
-                     node.setEstado("Path");
-                 }
-             }
+        principalView.getTxtRespuestas().setText(resultado.toString());
 
-         }
-         
-         principalView.getTxtRespuestas().setText(resultado.toString());
-         
-         panel.repaint();
-        
-       }
+        panel.repaint();
+
+    }
+
+    private void recorrerDFS() {
+        DFSPathFinder dfsPathFinder = new DFSPathFinder();
+        PathResult<String> resultado = dfsPathFinder.find(daoNode.obtenerGrafo(), (Node) principalView.getComboOrigen().getSelectedItem(), (Node) principalView.getComboDestino().getSelectedItem());
+
+        for (Node node : panel.getNodosColocados()) {
+            for (String valorNodo : resultado.getVisitados()) {
+
+                if (valorNodo.equalsIgnoreCase(String.valueOf(node.getValue()))) {
+                    node.setEstado("Visited");
+                }
+            }
+            for (String valorNodo : resultado.getPath()) {
+                if (valorNodo.equalsIgnoreCase(String.valueOf(node.getValue()))) {
+                    node.setEstado("Path");
+                }
+            }
+
+        }
+
+        principalView.getTxtRespuestas().setText(resultado.toString());
+
+        panel.repaint();
+
+    }
+
     private void cofigurarBotonLimpiar() {
-        
-    
+        principalView.getBtnLimpiarMapa().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                limpiarMapa();
+            }
+
+        });
+
+    }
+
+    private void limpiarMapa() {
+        daoNode.borrarTodo();
+        panel.setConexiones(new HashMap<>());
+        panel.setNodosColocados(new ArrayList<>());
+        panel.repaint();
+
     }
 
     private void limpiarRecorrido() {
-         for (Node node : panel.getNodosColocados()) {
+        for (Node node : panel.getNodosColocados()) {
             node.setEstado("Create");
-         }
-                  principalView.getTxtRespuestas().setText("");
-         panel.repaint();
-   
+        }
+        principalView.getTxtRespuestas().setText("");
+        panel.repaint();
+
     }
-    
-    
-    
+
+    private void inicializarNodos() {
+
+      
+
+        for (Node node : daoNode.listar()) {
+            panel.agregarNodoVisual(node);
+        }
+
+      
+        actualizarNodos();
+        panel.repaint();
+    }
+
 }

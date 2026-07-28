@@ -22,4 +22,6 @@ public interface NodeDAO {
     void biConexion(Node<String> node,Node<String> node2);
     void crearPredefinidos();
     Graphs<String> obtenerGrafo();
+    void borrarTodo();
+   
 }

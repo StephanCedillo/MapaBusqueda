@@ -4,6 +4,11 @@
  */
 package memoria;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
@@ -21,16 +26,20 @@ public class NodeDAOMemoria implements NodeDAO {
 
     private Set<Node<String>> nodos;
     private Graphs<String> graph;
+ 
 
     public NodeDAOMemoria() {
         nodos = new LinkedHashSet<>();
         graph = new Graphs<>();
+        
+
     }
 
     @Override
     public void crear(Node<String> node) {
         nodos.add(node);
         graph.add(node);
+
     }
 
     @Override
@@ -138,4 +147,11 @@ public class NodeDAOMemoria implements NodeDAO {
         return graph;
     }
 
+    @Override
+    public void borrarTodo() {
+        nodos = new LinkedHashSet<>();
+        graph = new Graphs<>(); // Vaciamos el grafo en memoria
+    }
+
+    
 }

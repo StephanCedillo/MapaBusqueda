@@ -106,7 +106,7 @@ public class PanelMapaInteractivo extends JPanel {
     );
 
     private  List<Node> nodosColocados = new ArrayList<>();
-    private Map<Node, String> nodosDireccion= new HashMap<Node, String>();
+
     private final int RADIO_INTERSECCION = 20;
 
     public PanelMapaInteractivo() {
@@ -272,13 +272,6 @@ public class PanelMapaInteractivo extends JPanel {
         this.nodosColocados = nodosColocados;
     }
 
-    public Map<Node, String> getNodosDireccion() {
-        return nodosDireccion;
-    }
-
-    public void setNodosDireccion(Map<Node, String> nodosDireccion) {
-        this.nodosDireccion = nodosDireccion;
-    }
-   
+  
    
 }

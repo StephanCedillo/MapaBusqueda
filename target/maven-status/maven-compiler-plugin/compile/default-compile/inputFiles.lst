@@ -1,6 +1,7 @@
 /Users/stephancedillo/NetBeansProjects/MapaBusqueda/src/main/java/controllers/Conexion.java
 /Users/stephancedillo/NetBeansProjects/MapaBusqueda/src/main/java/controllers/PrincipalController.java
 /Users/stephancedillo/NetBeansProjects/MapaBusqueda/src/main/java/memoria/NodeDAO.java
+/Users/stephancedillo/NetBeansProjects/MapaBusqueda/src/main/java/memoria/NodeDAOArchivo.java
 /Users/stephancedillo/NetBeansProjects/MapaBusqueda/src/main/java/memoria/NodeDAOMemoria.java
 /Users/stephancedillo/NetBeansProjects/MapaBusqueda/src/main/java/structures/Celda.java
 /Users/stephancedillo/NetBeansProjects/MapaBusqueda/src/main/java/structures/Node.java
