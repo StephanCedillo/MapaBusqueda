@@ -403,6 +403,7 @@ public class PrincipalController {
                 if (nodoA == null) {
                     nodoA = nodoClickeado;
                     principalView.getLblMensajeSeleccion().setText("Selecciona el Punto 2");
+                    
                 } else if (nodoA != nodoClickeado) {
 
                     if (esConexionPermitida(nodoA, nodoClickeado)) {
