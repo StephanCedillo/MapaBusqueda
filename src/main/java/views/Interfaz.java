@@ -110,12 +110,15 @@ public class Interfaz extends javax.swing.JFrame {
     public void setBtnEliminarNodo(JButton btnEliminarNodo) {
         this.btnEliminarNodo = btnEliminarNodo;
     }
-    
-    
-    
-    
-    
 
+    public JButton getBtnFinalPath() {
+        return btnFinalPath;
+    }
+
+    public void setBtnFinalPath(JButton btnFinalPath) {
+        this.btnFinalPath = btnFinalPath;
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -145,6 +148,7 @@ public class Interfaz extends javax.swing.JFrame {
         btnBFS = new javax.swing.JButton();
         btnDFS = new javax.swing.JButton();
         btnLimpiarR = new javax.swing.JButton();
+        btnFinalPath = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         lblMensajeSeleccion = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -268,6 +272,8 @@ public class Interfaz extends javax.swing.JFrame {
         btnLimpiarR.setFont(new java.awt.Font("ITF Devanagari Marathi", 1, 14)); // NOI18N
         btnLimpiarR.setText("Limpiar");
 
+        btnFinalPath.setText("Final");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -277,15 +283,19 @@ public class Interfaz extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(comboOrigen, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(comboDestino, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnLimpiarR, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
                             .addComponent(jLabel3)
-                            .addComponent(jLabel4))
-                        .addGap(0, 19, Short.MAX_VALUE))
-                    .addComponent(btnBFS, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnDFS, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnLimpiarR, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel4)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnDFS, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnBFS, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnFinalPath)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -301,9 +311,14 @@ public class Interfaz extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnBFS)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnDFS)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(btnBFS)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnDFS))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addComponent(btnFinalPath, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnLimpiarR)
                 .addContainerGap())
@@ -407,6 +422,7 @@ public class Interfaz extends javax.swing.JFrame {
     private javax.swing.JButton btnCrearNodo;
     private javax.swing.JButton btnDFS;
     private javax.swing.JButton btnEliminarNodo;
+    private javax.swing.JButton btnFinalPath;
     private javax.swing.JButton btnLimpiarMapa;
     private javax.swing.JButton btnLimpiarR;
     private javax.swing.JComboBox<Node> comboDestino;

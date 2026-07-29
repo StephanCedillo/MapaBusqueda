@@ -83,7 +83,7 @@ public class Node<T> {
     
     public boolean contiene(int mouseX, int mouseY) {
 
-        int radioDelNodo = 20; // Ajusta esto al tamaño visual de tu nodo
+        int radioDelNodo = 20; 
         double distancia = Math.sqrt(Math.pow(this.x - mouseX, 2) + Math.pow(this.y - mouseY, 2));
         return distancia <= radioDelNodo;
     }

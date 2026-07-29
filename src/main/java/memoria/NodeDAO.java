@@ -4,7 +4,6 @@
  */
 package memoria;
 
-import java.util.List;
 import java.util.Set;
 
 import structures.Node;
