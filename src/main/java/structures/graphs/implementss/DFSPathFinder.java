@@ -25,25 +25,25 @@ public class DFSPathFinder<T> implements PathFinder<T> {
     }
 
     private boolean dfs(Graphs<T> graph, Node<T> nC, Node<T> nE, Set<T> visited, Set<T> path) {
+        T currentVal = nC.getValue();
+        
+        visited.add(currentVal);
+        path.add(currentVal);
 
-        visited.add(nC.getValue());
-        path.add(nC.getValue());
-
-        if (nC.getValue().equals(nE.getValue())) {
+        if (currentVal.equals(nE.getValue())) {
             return true;
         }
 
         for (Node<T> vecino : graph.getVecinos(nC)) {
-            if (!visited.contains(vecino.getValue())) {
+            if (!path.contains(vecino.getValue())) {
                 boolean encontrado = dfs(graph, vecino, nE, visited, path);
-
                 if (encontrado) {
                     return true;
                 }
             }
         }
-        
-        path.remove(nC.getValue());
+
+        path.remove(currentVal);
         return false;
     }
 }

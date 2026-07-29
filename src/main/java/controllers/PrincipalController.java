@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
 
 import javax.swing.JOptionPane;
 
@@ -194,6 +194,7 @@ public class PrincipalController {
     private boolean modoCrearNodo = false;
     private boolean modoConectar = false;
     private boolean modoEliminar = false;
+    private  PathResult<String> resultadoFinal;
 
     public PrincipalController(Interfaz principalView, PanelMapaInteractivo panel, NodeDAO daoNode) {
         this.principalView = principalView;
@@ -270,6 +271,7 @@ public class PrincipalController {
         configurarBotonRecorridos();
         cofigurarBotonLimpiar();
         configurarBotonEliminarNodo();
+        configurarBotonFinalPath();
 
     }
 
@@ -370,8 +372,8 @@ public class PrincipalController {
                             }
                             JOptionPane.showMessageDialog(principalView, "Nodo Eliminado con Exito");
            
-                        actualizarNodos();
-                        panel.repaint();
+                            actualizarNodos();
+                            panel.repaint();
                         }
                     }else{
                        JOptionPane.showMessageDialog(principalView, "El nodo " + nodoClickeado.getValue() + " no fue eliminado"); 
@@ -579,6 +581,8 @@ public class PrincipalController {
             }
 
         }
+        
+        resultadoFinal = resultado;
 
         principalView.getTxtRespuestas().setText(resultado.toString());
 
@@ -587,26 +591,35 @@ public class PrincipalController {
     }
 
     private void recorrerDFS() {
-        DFSPathFinder dfsPathFinder = new DFSPathFinder();
-        PathResult<String> resultado = dfsPathFinder.find(daoNode.obtenerGrafo(), (Node) principalView.getComboOrigen().getSelectedItem(), (Node) principalView.getComboDestino().getSelectedItem());
+        DFSPathFinder<String> dfsPathFinder = new DFSPathFinder<>();
 
-        for (Node node : panel.getNodosColocados()) {
-            for (String valorNodo : resultado.getVisitados()) {
+        Node<String> nOrigen = (Node<String>) principalView.getComboOrigen().getSelectedItem();
+        Node<String> nDestino = (Node<String>) principalView.getComboDestino().getSelectedItem();
 
-                if (valorNodo.equalsIgnoreCase(String.valueOf(node.getValue()))) {
-                    node.setEstado("Visited");
-                }
+        PathResult<String> resultado = dfsPathFinder.find(daoNode.obtenerGrafo(), nOrigen, nDestino);
+
+        Set<String> visitados = resultado.getVisitados();
+        Set<String> camino = resultado.getPath();
+
+        for (Node<String> node : panel.getNodosColocados()) {
+            String valorNodo = String.valueOf(node.getValue());
+
+
+            if (camino.contains(valorNodo)) {
+                node.setEstado("Path");
+            } 
+            else if (visitados.contains(valorNodo)) {
+                node.setEstado("Visited");
+            } 
+            else {
+              
+                node.setEstado("Normal");
             }
-            for (String valorNodo : resultado.getPath()) {
-                if (valorNodo.equalsIgnoreCase(String.valueOf(node.getValue()))) {
-                    node.setEstado("Path");
-                }
-            }
-
         }
-
+        
+        resultadoFinal = resultado;
+        
         principalView.getTxtRespuestas().setText(resultado.toString());
-
         panel.repaint();
 
     }
@@ -619,6 +632,23 @@ public class PrincipalController {
             }
 
         });
+
+    }
+    
+    public void finalPath(){
+        
+        Set<String> visitados = resultadoFinal.getVisitados();
+        Set<String> camino = resultadoFinal.getPath();
+        
+        for (Node<String> node : panel.getNodosColocados()){
+            String ocultar = String.valueOf(node.getValue());
+            if (camino.contains(ocultar)) {
+                node.setEstado("Path"); 
+            }else if (visitados.contains(ocultar)) {
+                node.setEstado("Normal");
+            } 
+        }
+        panel.repaint();
 
     }
 
@@ -662,6 +692,17 @@ public class PrincipalController {
                 modoCrearNodo = false;
                 modoEliminar = true;
                 JOptionPane.showMessageDialog(principalView, "Modo eliminar nodo activado");
+            }
+        });
+    }
+    
+    // ===== FINAL PATH ====
+    public void configurarBotonFinalPath(){
+        principalView.getBtnFinalPath().addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                JOptionPane.showMessageDialog(principalView, "Ruta Final");
+                finalPath();
             }
         });
     }
